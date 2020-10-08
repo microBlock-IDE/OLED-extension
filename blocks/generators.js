@@ -26,7 +26,7 @@ Blockly.Python['oled_draw_line'] = function(block) {
   var value_x2 = Blockly.Python.valueToCode(block, 'x2', Blockly.Python.ORDER_ATOMIC);
   var value_y2 = Blockly.Python.valueToCode(block, 'y2', Blockly.Python.ORDER_ATOMIC);
 
-  var code = `oled.line(${value_x1}, ${value_y1}, ${value_x2}, ${value_y2}); oled.show()\n`;
+  var code = `oled.line(${value_x1}, ${value_y1}, ${value_x2}, ${value_y2}, 1); oled.show()\n`;
   return code;
 };
 
