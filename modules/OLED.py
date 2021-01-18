@@ -1,6 +1,7 @@
 from micropython import const
 import framebuf
 from machine import Pin, I2C
+import os
 
 # register definitions
 SET_CONTRAST = const(0x81)
@@ -99,7 +100,11 @@ class SSD1306(framebuf.FrameBuffer):
 
 class SSD1306_I2C(SSD1306):
     def __init__(self, width, height, addr=0x3C, external_vcc=False):
-        self.i2c = I2C(1, scl=Pin(5), sda=Pin(4), freq=100000)
+        machine = os.uname().machine
+        if "KidBright32" in machine:
+            self.i2c = I2C(1, scl=Pin(5), sda=Pin(4), freq=100000)
+        else:
+            self.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=100000)
         self.addr = addr
         self.temp = bytearray(2)
         self.write_list = [b"\x40", None]  # Co=0, D/C#=1
