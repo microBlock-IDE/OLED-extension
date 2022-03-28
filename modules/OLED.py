@@ -101,10 +101,12 @@ class SSD1306(framebuf.FrameBuffer):
 class SSD1306_I2C(SSD1306):
     def __init__(self, width, height, addr=0x3C, external_vcc=False):
         machine = os.uname().machine
-        if "KidBright32" in machine:
-            self.i2c = I2C(1, scl=Pin(5), sda=Pin(4), freq=100000)
+        if ("KidBright32" in machine) or ("KidMotor V4" in machine):
+            self.i2c = I2C(1, scl=Pin(5), sda=Pin(4), freq=400000)
+        elif "Mbits" in machine:
+            self.i2c = I2C(0, scl=Pin(21), sda=Pin(22), freq=400000)
         else:
-            self.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=100000)
+            self.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
         self.addr = addr
         self.temp = bytearray(2)
         self.write_list = [b"\x40", None]  # Co=0, D/C#=1
