@@ -103,7 +103,7 @@ class SSD1306_I2C(SSD1306):
         machine = os.uname().machine
         if ("KidBright32" in machine) or ("KidMotor V4" in machine):
             self.i2c = I2C(1, scl=Pin(5), sda=Pin(4), freq=400000)
-        elif "Mbits" in machine:
+        elif ("Mbits" in machine) or ("OpenBIT" in machine):
             self.i2c = I2C(0, scl=Pin(21), sda=Pin(22), freq=400000)
         else:
             self.i2c = I2C(0, scl=Pin(22), sda=Pin(21), freq=400000)
